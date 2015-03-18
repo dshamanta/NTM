@@ -1,4 +1,13 @@
-# NTM
+#NTM + Doc2vec (version 0.2 alpha)
+Requirements:
+Version: Python 2.7+
+The program requires some of the python packages including gensim, numpy, scipy, pickle and so on. If your python distribution misses any package it will produce an error called "No module found named ... (Module name)"
+
+doc2vec_TopicVector_NonDet.py: I used the code to generate the results. Here you will find a method named "Train" that is NTM part in addition to doc2vec. I also included an evaluation metric for classification and saving only the topic vectors.
+
+word2vec.py: I changed a little bit in the file to initialize some values such as ntopics (# of Topics) and so on.
+
+# NTM (version 0.1 alpha)
 Neural Network Topic Modeling
 
 Requirements:
