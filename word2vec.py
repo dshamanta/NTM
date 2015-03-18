@@ -80,7 +80,7 @@ from numpy import exp, dot, zeros, outer, random, dtype, float32 as REAL,\
     uint32, seterr, array, uint8, vstack, argsort, fromstring, sqrt, newaxis,\
     ndarray, empty, sum as np_sum, prod
 
-logger = logging.getLogger("doc2vec")
+logger = logging.getLogger("doc2vec_Det_TopicVector")
 
 
 from gensim import utils, matutils  # utility fnc for pickling, common scipy operations etc
@@ -176,7 +176,7 @@ class Word2Vec(utils.SaveLoad):
     """
     def __init__(self, sentences=None, size=100, alpha=0.025, window=5, min_count=5,
         sample=0, seed=1, workers=1, min_alpha=0.0001, sg=1, hs=1, negative=0,
-        cbow_mean=0, hashfxn=hash, iter=1):
+        cbow_mean=0, hashfxn=hash, iter=1, ntopic = 3):
         """
         Initialize the model from an iterable of `sentences`. Each sentence is a
         list of words (unicode strings) that will be used for training.
@@ -241,7 +241,7 @@ class Word2Vec(utils.SaveLoad):
         self.hashfxn = hashfxn
         self.iter = iter
         self.noOfLabels = 0
-        self.K = 3
+        self.K = ntopic
         if sentences is not None:
             self.build_vocab(sentences)
             sentences = utils.RepeatCorpusNTimes(sentences, iter)
@@ -385,6 +385,7 @@ class Word2Vec(utils.SaveLoad):
                 alpha = max(self.min_alpha, self.alpha * (1 - 1.0 * word_count[0] / total_words))
                 # how many words did we train on? out-of-vocabulary (unknown) words do not count
                 job_words = self._get_job_words(alpha, work, job, neu1)
+                
                 with lock:
                     word_count[0] += job_words
                     elapsed = time.time() - start
